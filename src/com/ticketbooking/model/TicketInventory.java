@@ -27,16 +27,17 @@ public class TicketInventory {
         return totalTicketsSold;
     }
 
-    public BookingResult bookTickets(int requestedTickets){
+//    Checks the availability of ticket and then book
+    public boolean bookTickets(int requestedTickets){
         lock.lock();
         try{
             if(availableTickets >= requestedTickets){
                 availableTickets -= requestedTickets;
                 totalTicketsSold += requestedTickets;
 
-                return new BookingResult(true,availableTickets);
+                return true;
             }else{
-                return new BookingResult(false,availableTickets);
+                return false;
             }
         }finally {
             lock.unlock();

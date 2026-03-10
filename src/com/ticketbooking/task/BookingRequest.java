@@ -18,12 +18,12 @@ public class BookingRequest implements Runnable {
     @Override
     public void run() {
         int requestedTickets = ThreadLocalRandom.current().nextInt(1,4);
-        BookingResult bookingResult = inventory.bookTickets(requestedTickets);
+        boolean bookingResult = inventory.bookTickets(requestedTickets);
 
-        if(bookingResult.isSuccess()){
-            System.out.println(userName+" requested "+requestedTickets+" tickets -> Booked -> Remaining:"+bookingResult.getRemainingTickets());
+        if(bookingResult){
+            System.out.println(userName+" requested "+requestedTickets+" tickets -> Booked -> Remaining:"+inventory.getAvailableTickets());
         }else{
-            System.out.println(userName+" requested "+requestedTickets+" tickets -> Failed (Not enough tickets) -> Remaining:"+bookingResult.getRemainingTickets());
+            System.out.println(userName+" requested "+requestedTickets+" tickets -> Failed (Not enough tickets) -> Remaining:"+inventory.getAvailableTickets());
         }
     }
 }
