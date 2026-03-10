@@ -1,8 +1,8 @@
 package com.ticketbooking.service;
 
 import com.ticketbooking.model.TicketInventory;
+import com.ticketbooking.model.TicketInventoryAtomic;
 //import com.ticketbooking.task.BookingRequest;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,9 +11,10 @@ import java.util.concurrent.TimeUnit;
 public class BookingSimulationService {
     private static final int THREAD_POOL_SIZE = 5;
     private static final int TOTAL_USER_COUNT = 1000;
-    private final TicketInventory inventory;
+//    private final TicketInventory inventory;
 
-    public BookingSimulationService(TicketInventory inventory) {
+    private final TicketInventoryAtomic inventory;
+    public BookingSimulationService(TicketInventoryAtomic inventory) {
         this.inventory = inventory;
     }
 

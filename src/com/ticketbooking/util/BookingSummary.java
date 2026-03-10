@@ -1,12 +1,13 @@
 package com.ticketbooking.util;
 
 import com.ticketbooking.model.TicketInventory;
+import com.ticketbooking.model.TicketInventoryAtomic;
 
 public class BookingSummary {
-    private final TicketInventory inventory;
+    private final TicketInventoryAtomic inventory;
     private final long executionTime;
 
-    public BookingSummary(TicketInventory inventory, long executionTime) {
+    public BookingSummary(TicketInventoryAtomic inventory, long executionTime) {
         this.inventory = inventory;
         this.executionTime = executionTime;
     }
