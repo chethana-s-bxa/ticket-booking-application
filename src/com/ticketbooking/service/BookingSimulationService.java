@@ -15,7 +15,7 @@ public class BookingSimulationService {
         this.inventory = inventory;
     }
 
-    public long startSimulation() throws InterruptedException {
+    public long startSimulation(){
         long startTime = System.currentTimeMillis();
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
@@ -24,7 +24,12 @@ public class BookingSimulationService {
             executor.submit(request);
         }
         executor.shutdown();
-        executor.awaitTermination(1, TimeUnit.MINUTES);
+        try {
+            executor.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            System.out.println("Execution is interrupted");
+            e.printStackTrace();
+        }
 
         long endTime = System.currentTimeMillis();
 
