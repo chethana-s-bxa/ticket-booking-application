@@ -27,7 +27,7 @@ public class TicketInventory {
         return totalTicketsSold;
     }
 
-    public boolean bookTickets(int requestedTickets){
+    public  boolean bookTickets(int requestedTickets){
         lock.lock();
         try{
             if(availableTickets >= requestedTickets){
