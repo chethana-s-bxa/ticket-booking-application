@@ -7,7 +7,7 @@ public class TicketInventory {
     private int availableTickets;
     private int totalTicketsSold;
 
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock(true);
 
     public TicketInventory(int initialTickets) {
         this.INITIAL_TICKETS = initialTickets;
@@ -27,16 +27,16 @@ public class TicketInventory {
         return totalTicketsSold;
     }
 
-    public  boolean bookTickets(int requestedTickets){
+    public BookingResult bookTickets(int requestedTickets){
         lock.lock();
         try{
             if(availableTickets >= requestedTickets){
                 availableTickets -= requestedTickets;
                 totalTicketsSold += requestedTickets;
 
-                return true;
+                return new BookingResult(true,availableTickets);
             }else{
-                return false;
+                return new BookingResult(false,availableTickets);
             }
         }finally {
             lock.unlock();
