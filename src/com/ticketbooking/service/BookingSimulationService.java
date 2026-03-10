@@ -1,10 +1,11 @@
 package com.ticketbooking.service;
 
 import com.ticketbooking.model.TicketInventory;
-import com.ticketbooking.task.BookingRequest;
+//import com.ticketbooking.task.BookingRequest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class BookingSimulationService {
@@ -21,8 +22,9 @@ public class BookingSimulationService {
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
         for(int i=1 ; i <= TOTAL_USER_COUNT ; i++){
-            BookingRequest request = new BookingRequest("User-"+i, inventory);
-            executor.submit(request);
+//            BookingRequest request = new BookingRequest("User-"+i, inventory);
+            int userId =i;
+            executor.submit(() -> processBooking("User-"+userId));
         }
         executor.shutdown();
         try {
@@ -35,5 +37,22 @@ public class BookingSimulationService {
         long endTime = System.currentTimeMillis();
 
         return endTime-startTime;
+    }
+
+    private void processBooking(String userName) {
+
+        int requestedTickets = ThreadLocalRandom.current().nextInt(1, 4);
+
+        boolean bookingResult = inventory.bookTickets(requestedTickets);
+
+        if (bookingResult) {
+            System.out.println(userName + " requested " + requestedTickets +
+                    " tickets -> Booked -> Remaining: " +
+                    inventory.getAvailableTickets());
+        } else {
+            System.out.println(userName + " requested " + requestedTickets +
+                    " tickets -> Failed (Not enough tickets) -> Remaining: " +
+                    inventory.getAvailableTickets());
+        }
     }
 }
