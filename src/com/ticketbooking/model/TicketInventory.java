@@ -1,4 +1,4 @@
-package com.ticketbooking;
+package com.ticketbooking.model;
 
 public class TicketInventory {
 }
